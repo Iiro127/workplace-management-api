@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /system/ping:
+    get:
+      operationId: ping
+      summary: Replies with pong
+      description: Replies ping with pong
+      responses:
+        "200":
+          description: Pong
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    user:
+      description: A user in the system
+      properties:
+        id:
+          type: string
+          description: Id for user in the database
+        firstName:
+          type: string
+          description: user's first name
+        lastName:
+          type: string
+          description: user's last name
+        isActive:
+          type: boolean
+          description: Indicates whether the user is on vacation / employed
