@@ -18,8 +18,45 @@ paths:
             text/plain:
               schema:
                 type: string
+  /projects:
+    get:
+      operationId: getProjects
+      summary: Get list of all projects
+      description: Get list of all projects
+      tags:
+        - Projects
+      responses:
+        '200':
+          description: Get list of all projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/project"
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+
 components:
   schemas:
+    error:
+      type: object
+      description: Error object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message
     user:
       description: A user in the system
       properties:
@@ -35,3 +72,25 @@ components:
         isActive:
           type: boolean
           description: Indicates whether the user is on vacation / employed
+    project:
+      description: Schema for project
+      properties:
+        id:
+          type: string
+          description: Project's id
+        title:
+          type: string
+          description: Project's title
+        dateAdded:
+          type: string
+          description: Date when project was added
+        status:
+          type: string
+          description: Project status
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/user"
+        manager:
+          $ref: "#/components/schemas/user"
+
