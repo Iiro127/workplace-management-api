@@ -23,11 +23,12 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-jackson")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
-    implementation("com.squareup.moshi:moshi:1.13.0")  // Moshi Core
-    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")  // Moshi Kotlin Adapter
+    implementation("org.mongodb:mongodb-driver-sync:4.9.0")
+    implementation("com.squareup.moshi:moshi:1.13.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("io.swagger:swagger-annotations:1.6.3") // Adjust version if needed
-    implementation("org.hibernate.validator:hibernate-validator:6.0.13.Final") // The implementation of the validation API
+    implementation("io.swagger:swagger-annotations:1.6.3")
+    implementation("org.hibernate.validator:hibernate-validator:6.0.13.Final")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }
