@@ -12,6 +12,10 @@ class ProjectsApi: ProjectsApi {
 
     @Inject
     lateinit var projectsController: ProjectsController
+    override fun createProject(project: Project?): Project {
+        return Project()
+    }
+
     override fun getProjects(): MutableList<Project> {
         return try {
             projectsController.getProjects()

@@ -12,7 +12,7 @@ import src.gen.java.org.openapitools.model.Project
 import src.gen.java.org.openapitools.model.User
 
 @ApplicationScoped
-class ProjectsDatabaseController {
+class ProjectsDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
     private lateinit var dbAddress: String
@@ -22,11 +22,12 @@ class ProjectsDatabaseController {
      *
      * @return MongoCollection<Document>
      */
-    fun getDatabase(): MongoCollection<Document>{
+    fun getDatabase(): MongoIterable<Document>{
         val client = MongoClients.create(dbAddress)
         val database = client.getDatabase("workplace_management-db")
+        val collection = database.getCollection("projects")
 
-        return database.getCollection("projects")
+        return collection.find()
     }
 
     /**
@@ -35,9 +36,8 @@ class ProjectsDatabaseController {
      * @return List<Project>
      */
     fun getProjectsFromDatabase(): List<Project> {
-        val projects: MongoIterable<Document> = getDatabase().find()
 
-        return projects.map { doc ->
+        return getDatabase().map { doc ->
             val projectDoc = doc.get("project", Document::class.java)
 
             Project()
@@ -52,19 +52,5 @@ class ProjectsDatabaseController {
                     mapUser(managerDoc)
                 })
         }.toList()
-    }
-
-    /**
-     * Maps user fetched from database
-     *
-     * @param doc Document
-     * @return User
-     */
-    private fun mapUser(doc: Document): User {
-        return User()
-            .id(doc.getString("id"))
-            .firstName(doc.getString("firstName"))
-            .lastName(doc.getString("lastName"))
-            .isActive(doc.getBoolean("isActive"))
     }
 }
