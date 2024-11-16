@@ -31,6 +31,7 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:6.0.13.Final")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    testImplementation("org.wiremock:wiremock:3.9.2")
 }
 
 group = "com.example"
