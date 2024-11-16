@@ -32,9 +32,9 @@ abstract class DatabaseResource {
             .append("dateAdded", project.dateAdded)
             .append("status", project.status)
             .append("members", project.members.map { user ->
-                userToDocument(user) // Convert each User object to Document
+                userToDocument(user)
             })
-            .append("manager", project.manager?.let { userToDocument(it) }) // Convert manager to Document if not null
+            .append("manager", project.manager?.let { userToDocument(it) })
     }
 
     /**
