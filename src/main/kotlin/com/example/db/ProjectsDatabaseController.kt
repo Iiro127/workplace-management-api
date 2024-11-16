@@ -22,12 +22,10 @@ class ProjectsDatabaseController: DatabaseResource() {
      *
      * @return MongoCollection<Document>
      */
-    fun getDatabase(): MongoIterable<Document>{
+    fun getDatabase(): MongoCollection<Document> {
         val client = MongoClients.create(dbAddress)
         val database = client.getDatabase("workplace_management-db")
-        val collection = database.getCollection("projects")
-
-        return collection.find()
+        return database.getCollection("projects")
     }
 
     /**
@@ -36,8 +34,9 @@ class ProjectsDatabaseController: DatabaseResource() {
      * @return List<Project>
      */
     fun getProjectsFromDatabase(): List<Project> {
+        val collection = getDatabase().find()
 
-        return getDatabase().map { doc ->
+        return collection.map { doc ->
             val projectDoc = doc.get("project", Document::class.java)
 
             Project()
@@ -52,5 +51,23 @@ class ProjectsDatabaseController: DatabaseResource() {
                     mapUser(managerDoc)
                 })
         }.toList()
+    }
+
+    /**
+     * Adds a new project to database
+     *
+     * @param project Project
+     * @return Boolean
+     */
+    fun addProjectToDatabase(project: Project?): Boolean {
+        return try {
+            val projectDocument = Document()
+                .append("project", projectToDocument(project!!))
+            getDatabase().insertOne(projectDocument)
+
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }
