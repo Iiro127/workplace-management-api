@@ -12,7 +12,7 @@ import src.gen.java.org.openapitools.model.Project
 import src.gen.java.org.openapitools.model.User
 
 @ApplicationScoped
-class ProjectsDatabaseController {
+class ProjectsDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
     private lateinit var dbAddress: String
@@ -22,10 +22,9 @@ class ProjectsDatabaseController {
      *
      * @return MongoCollection<Document>
      */
-    fun getDatabase(): MongoCollection<Document>{
+    fun getDatabase(): MongoCollection<Document> {
         val client = MongoClients.create(dbAddress)
         val database = client.getDatabase("workplace_management-db")
-
         return database.getCollection("projects")
     }
 
@@ -35,9 +34,9 @@ class ProjectsDatabaseController {
      * @return List<Project>
      */
     fun getProjectsFromDatabase(): List<Project> {
-        val projects: MongoIterable<Document> = getDatabase().find()
+        val collection = getDatabase().find()
 
-        return projects.map { doc ->
+        return collection.map { doc ->
             val projectDoc = doc.get("project", Document::class.java)
 
             Project()
@@ -55,16 +54,20 @@ class ProjectsDatabaseController {
     }
 
     /**
-     * Maps user fetched from database
+     * Adds a new project to database
      *
-     * @param doc Document
-     * @return User
+     * @param project Project
+     * @return Boolean
      */
-    private fun mapUser(doc: Document): User {
-        return User()
-            .id(doc.getString("id"))
-            .firstName(doc.getString("firstName"))
-            .lastName(doc.getString("lastName"))
-            .isActive(doc.getBoolean("isActive"))
+    fun addProjectToDatabase(project: Project?): Boolean {
+        return try {
+            val projectDocument = Document()
+                .append("project", projectToDocument(project!!))
+            getDatabase().insertOne(projectDocument)
+
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

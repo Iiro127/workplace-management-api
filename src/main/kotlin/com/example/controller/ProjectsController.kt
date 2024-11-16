@@ -19,4 +19,14 @@ class ProjectsController {
     fun getProjects(): MutableList<Project>{
         return databaseController.getProjectsFromDatabase().toMutableList()
     }
+
+    /**
+     * Creates a new project
+     *
+     * @param project Project
+     * @return Boolean
+     */
+    fun createProject(project: Project): Boolean {
+        return databaseController.addProjectToDatabase(project)
+    }
 }
