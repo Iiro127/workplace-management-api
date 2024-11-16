@@ -40,6 +40,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    post:
+      operationId: createProject
+      summary: Create new project
+      description: Create new project
+      tags:
+        - Projects
+      responses:
+        '200':
+          description: Create new project
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/project"
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
