@@ -31,4 +31,12 @@ class ProjectsApi: ProjectsApi {
             throw e
         }
     }
+
+    override fun updateProject(projectId: String?, project: Project?): Project {
+       return if (projectsController.updateProject(projectId!!, project!!)){
+           project
+       } else {
+           Project()
+       }
+    }
 }
