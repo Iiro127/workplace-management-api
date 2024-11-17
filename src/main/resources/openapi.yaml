@@ -80,13 +80,6 @@ paths:
           description: projectId
           schema:
             type: string
-      requestBody:
-        description: Find project
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/project'
       responses:
         "200":
           description: Found project.
