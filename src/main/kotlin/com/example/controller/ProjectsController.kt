@@ -20,6 +20,10 @@ class ProjectsController {
         return databaseController.getProjectsFromDatabase().toMutableList()
     }
 
+    fun findProject(projectId: String): Project {
+        return Project()
+    }
+
     /**
      * Creates a new project
      *
