@@ -67,6 +67,40 @@ paths:
               schema:
                 $ref: "#/components/schemas/error"
   /projects/{projectId}:
+    get:
+      operationId: findProject
+      summary: Find a project by id
+      description: Find a project by id
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: projectId
+          schema:
+            type: string
+      requestBody:
+        description: Find project
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/project'
+      responses:
+        "200":
+          description: Found project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+
     put:
       operationId: updateProject
       summary: Update an existing project
