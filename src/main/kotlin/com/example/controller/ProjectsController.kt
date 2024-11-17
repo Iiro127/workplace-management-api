@@ -20,8 +20,14 @@ class ProjectsController {
         return databaseController.getProjectsFromDatabase().toMutableList()
     }
 
+    /**
+     * Finds a project with projectId
+     *
+     * @param projectId String
+     * @return Project
+     */
     fun findProject(projectId: String): Project {
-        return Project()
+        return databaseController.findProjectFromDatabase(projectId)
     }
 
     /**

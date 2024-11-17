@@ -70,4 +70,30 @@ class ProjectsDatabaseController: DatabaseResource() {
             false
         }
     }
+
+    /**
+     * Finds a project from database based on projectId
+     *
+     * @param projectId String
+     * @return Project
+     */
+    fun findProjectFromDatabase(projectId : String): Project {
+        val collection = getDatabase().find(Document("id", projectId))
+
+        return collection.firstOrNull()?.let { doc ->
+            val projectDoc = doc.get("project", Document::class.java)
+
+            Project()
+                .id(projectDoc.getString("id"))
+                .title(projectDoc.getString("title"))
+                .status(projectDoc.getString("status"))
+                .dateAdded(projectDoc.getString("dateAdded"))
+                .members(projectDoc.getList("members", Document::class.java)?.map { memberDoc ->
+                    mapUser(memberDoc)
+                } ?: emptyList())
+                .manager(projectDoc.get("manager", Document::class.java)?.let { managerDoc ->
+                    mapUser(managerDoc)
+                })
+        }!!
+    }
 }
