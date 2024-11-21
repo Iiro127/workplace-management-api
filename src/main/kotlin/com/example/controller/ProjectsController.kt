@@ -48,6 +48,6 @@ class ProjectsController {
      * @return Boolean
      */
     fun updateProject(projectId: String, project: Project): Boolean {
-        return false
+        return databaseController.updateProjectInDatabase(projectId, project)
     }
 }

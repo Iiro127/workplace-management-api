@@ -77,7 +77,7 @@ class ProjectsDatabaseController: DatabaseResource() {
      * @param projectId String
      * @return Project
      */
-    fun findProjectFromDatabase(projectId: String): Project? {
+    fun findProjectFromDatabase(projectId: String): Project {
         return getDatabase()
             .find(Document("project.id", projectId))
             .firstOrNull()
@@ -90,7 +90,7 @@ class ProjectsDatabaseController: DatabaseResource() {
                     .dateAdded(projectDoc.getString("dateAdded"))
                     .members(projectDoc.getList("members", Document::class.java)?.mapNotNull(::mapUser) ?: emptyList())
                     .manager(projectDoc.get("manager", Document::class.java)?.let(::mapUser))
-            }
+            }!!
     }
 
 
@@ -103,8 +103,9 @@ class ProjectsDatabaseController: DatabaseResource() {
      */
     fun updateProjectInDatabase(projectId: String, newProject: Project): Boolean{
         return try {
-            val updateDocument = Document("\$set", projectToDocument(newProject))
-            val result = getDatabase().updateOne(Document("id", projectId), updateDocument)
+            val projectDocument = Document("project", projectToDocument(newProject))
+            val result = getDatabase().replaceOne(Document("project.id", projectId), projectDocument)
+
             result.modifiedCount > 0
         } catch (e: Exception) {
             e.printStackTrace()
