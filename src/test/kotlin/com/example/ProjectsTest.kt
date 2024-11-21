@@ -1,24 +1,22 @@
 package com.example
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoClients
+import com.mongodb.client.MongoCollection
+import com.mongodb.client.MongoDatabase
 import data.MockProjectData
 import io.restassured.RestAssured
 import io.restassured.RestAssured.given
-import io.restassured.RestAssured.post
-import jakarta.inject.Inject
-import org.gradle.internal.impldep.com.google.common.collect.Range.greaterThan
-import org.junit.jupiter.api.Test
-import src.gen.java.org.openapitools.api.ProjectsApi
+import org.bson.Document
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
-
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class ProjectsTest: MockProjectData() {
-
-    private lateinit var wireMockServer: WireMockServer
 
     /**
      * Tests /projects -endpoint
@@ -35,20 +33,51 @@ class ProjectsTest: MockProjectData() {
 
     @Test
     fun createProject(){
-        val requestBody = ObjectMapper().writeValueAsString(getProject())
+        val projectDocument = Document()
+            .append("project", getProject())
+        val result = collection.insertOne(projectDocument)
 
-        given()
-            .header("Content-Type", "application/json")
-            .body(requestBody)
-            .`when`()
-            .post("/projects")
-            .then()
-            .statusCode(200)
-            .contentType("application/json")
+        assertTrue(result.wasAcknowledged())
+    }
+
+    @Test
+    fun findProjectTest() {
+        collection.deleteMany(Document())
+        collection.insertMany(getProjects())
+
+        val projectTitle = collection
+            .find(Document("project.id", "123456"))
+            .first()
+            ?.get("project", Document::class.java)
+            ?.getString("title")
+
+        assertEquals("Test1", projectTitle)
+    }
+
+
+    @Test
+    fun testUpdateProjectInfo() {
+        collection.updateOne(
+            Document("project.id", "123456"),
+            Document("\$set", Document("project.title", "Edited"))
+        )
+
+        val updatedProject = collection
+            .find(Document("project.id", "123456"))
+            .first()
+
+        val updatedTitle = updatedProject
+            ?.get("project", Document::class.java)
+            ?.getString("title")
+
+        assertEquals("Edited", updatedTitle)
     }
 
     companion object {
         private lateinit var wireMockServer: WireMockServer
+        private lateinit var mongoClient: MongoClient
+        private lateinit var database: MongoDatabase
+        private lateinit var collection: MongoCollection<Document>
 
         @JvmStatic
         @BeforeAll
@@ -56,24 +85,17 @@ class ProjectsTest: MockProjectData() {
             RestAssured.baseURI = "http://localhost"
             RestAssured.port = 8081
 
-            wireMockServer = WireMockServer(8081)
-            wireMockServer.start()
+            mongoClient = MongoClients.create("mongodb://localhost:27017")
+            database = mongoClient.getDatabase("testdb")
+            collection = database.getCollection("projects")
+            collection.deleteMany(Document())
+            collection.insertMany(getProjects())
+        }
 
-            wireMockServer.stubFor(
-                post(urlEqualTo("/projects"))
-                    .willReturn(
-                        aResponse()
-                        .withStatus(201)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(
-                            ObjectMapper().writeValueAsString(getProjects())
-                        )
-                    )
-            )
-            wireMockServer.stubFor(
-                get(urlEqualTo("/projects"))
-                    .willReturn(jsonResponse(ObjectMapper().writeValueAsString(getProjects()), 200))
-            )
+        @JvmStatic
+        @AfterAll
+        fun cleanup(): Unit {
+            collection.deleteMany(Document())
         }
     }
 }

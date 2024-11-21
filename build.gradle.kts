@@ -8,6 +8,8 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven { url = uri("https://jitpack.io") }
+
 }
 
 val quarkusPlatformGroupId: String by project
@@ -32,6 +34,9 @@ dependencies {
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
     testImplementation("org.wiremock:wiremock:3.9.2")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.2.0") // Mongo Embedded
+    testImplementation("org.mongodb:mongodb-driver-sync:4.9.0")
+
 }
 
 group = "com.example"
