@@ -77,23 +77,38 @@ class ProjectsDatabaseController: DatabaseResource() {
      * @param projectId String
      * @return Project
      */
-    fun findProjectFromDatabase(projectId : String): Project {
-        val collection = getDatabase().find(Document("id", projectId))
+    fun findProjectFromDatabase(projectId: String): Project? {
+        return getDatabase()
+            .find(Document("project.id", projectId))
+            .firstOrNull()
+            ?.get("project", Document::class.java)
+            ?.let { projectDoc ->
+                Project()
+                    .id(projectDoc.getString("id"))
+                    .title(projectDoc.getString("title"))
+                    .status(projectDoc.getString("status"))
+                    .dateAdded(projectDoc.getString("dateAdded"))
+                    .members(projectDoc.getList("members", Document::class.java)?.mapNotNull(::mapUser) ?: emptyList())
+                    .manager(projectDoc.get("manager", Document::class.java)?.let(::mapUser))
+            }
+    }
 
-        return collection.firstOrNull()?.let { doc ->
-            val projectDoc = doc.get("project", Document::class.java)
 
-            Project()
-                .id(projectDoc.getString("id"))
-                .title(projectDoc.getString("title"))
-                .status(projectDoc.getString("status"))
-                .dateAdded(projectDoc.getString("dateAdded"))
-                .members(projectDoc.getList("members", Document::class.java)?.map { memberDoc ->
-                    mapUser(memberDoc)
-                } ?: emptyList())
-                .manager(projectDoc.get("manager", Document::class.java)?.let { managerDoc ->
-                    mapUser(managerDoc)
-                })
-        }!!
+    /**
+     * Updates project in database based on projectId
+     *
+     * @param projectId String
+     * @param newProject Project
+     * @return Boolean
+     */
+    fun updateProjectInDatabase(projectId: String, newProject: Project): Boolean{
+        return try {
+            val updateDocument = Document("\$set", projectToDocument(newProject))
+            val result = getDatabase().updateOne(Document("id", projectId), updateDocument)
+            result.modifiedCount > 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 }
