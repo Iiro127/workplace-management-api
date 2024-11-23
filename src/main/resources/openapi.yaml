@@ -169,6 +169,9 @@ components:
         title:
           type: string
           description: Project's title
+        customer:
+          type: string
+          description: Customer who the project is for
         dateAdded:
           type: string
           description: Date when project was added
