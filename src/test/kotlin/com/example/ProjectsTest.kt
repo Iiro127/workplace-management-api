@@ -1,19 +1,16 @@
 package com.example
 
-import com.github.tomakehurst.wiremock.WireMockServer
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import data.MockProjectData
 import io.restassured.RestAssured
-import io.restassured.RestAssured.given
 import org.bson.Document
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ProjectsTest: MockProjectData() {
