@@ -42,6 +42,7 @@ class ProjectsDatabaseController: DatabaseResource() {
             Project()
                 .id(projectDoc.getString("id"))
                 .title(projectDoc.getString("title"))
+                .customer(projectDoc.getString("customer"))
                 .status(projectDoc.getString("status"))
                 .dateAdded(projectDoc.getString("dateAdded"))
                 .members(projectDoc.getList("members", Document::class.java)?.map { memberDoc ->
@@ -86,6 +87,7 @@ class ProjectsDatabaseController: DatabaseResource() {
                 Project()
                     .id(projectDoc.getString("id"))
                     .title(projectDoc.getString("title"))
+                    .customer(projectDoc.getString("customer"))
                     .status(projectDoc.getString("status"))
                     .dateAdded(projectDoc.getString("dateAdded"))
                     .members(projectDoc.getList("members", Document::class.java)?.mapNotNull(::mapUser) ?: emptyList())
