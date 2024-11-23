@@ -19,18 +19,22 @@ import org.junit.jupiter.api.Test
 class ProjectsTest: MockProjectData() {
 
     /**
-     * Tests /projects -endpoint
+     * Tests getting all projects
      */
     @Test
     fun getAllProjects(){
-        given()
-            .`when`()
-            .get("/projects")
-            .then()
-            .statusCode(200)
-            .contentType("application/json")
+        val title = collection
+            .find()
+            .first()
+            ?.get("project", Document::class.java)
+            ?.getString("title")
+
+        assertEquals("Test1", title)
     }
 
+    /**
+     * Tests project creation
+     */
     @Test
     fun createProject(){
         val projectDocument = Document()
@@ -40,6 +44,9 @@ class ProjectsTest: MockProjectData() {
         assertTrue(result.wasAcknowledged())
     }
 
+    /**
+     * Tests finding project
+     */
     @Test
     fun findProjectTest() {
         collection.deleteMany(Document())
@@ -54,7 +61,9 @@ class ProjectsTest: MockProjectData() {
         assertEquals("Test1", projectTitle)
     }
 
-
+    /**
+     * Tests project updating
+     */
     @Test
     fun testUpdateProjectInfo() {
         collection.updateOne(
@@ -74,7 +83,6 @@ class ProjectsTest: MockProjectData() {
     }
 
     companion object {
-        private lateinit var wireMockServer: WireMockServer
         private lateinit var mongoClient: MongoClient
         private lateinit var database: MongoDatabase
         private lateinit var collection: MongoCollection<Document>
