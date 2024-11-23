@@ -21,6 +21,16 @@ class ProjectsController {
     }
 
     /**
+     * Finds a project with projectId
+     *
+     * @param projectId String
+     * @return Project
+     */
+    fun findProject(projectId: String): Project {
+        return databaseController.findProjectFromDatabase(projectId)
+    }
+
+    /**
      * Creates a new project
      *
      * @param project Project
@@ -28,5 +38,16 @@ class ProjectsController {
      */
     fun createProject(project: Project): Boolean {
         return databaseController.addProjectToDatabase(project)
+    }
+
+    /**
+     * Updates an existing project
+     *
+     * @param projectId String
+     * @param project Project
+     * @return Boolean
+     */
+    fun updateProject(projectId: String, project: Project): Boolean {
+        return databaseController.updateProjectInDatabase(projectId, project)
     }
 }

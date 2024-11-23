@@ -70,4 +70,46 @@ class ProjectsDatabaseController: DatabaseResource() {
             false
         }
     }
+
+    /**
+     * Finds a project from database based on projectId
+     *
+     * @param projectId String
+     * @return Project
+     */
+    fun findProjectFromDatabase(projectId: String): Project {
+        return getDatabase()
+            .find(Document("project.id", projectId))
+            .firstOrNull()
+            ?.get("project", Document::class.java)
+            ?.let { projectDoc ->
+                Project()
+                    .id(projectDoc.getString("id"))
+                    .title(projectDoc.getString("title"))
+                    .status(projectDoc.getString("status"))
+                    .dateAdded(projectDoc.getString("dateAdded"))
+                    .members(projectDoc.getList("members", Document::class.java)?.mapNotNull(::mapUser) ?: emptyList())
+                    .manager(projectDoc.get("manager", Document::class.java)?.let(::mapUser))
+            }!!
+    }
+
+
+    /**
+     * Updates project in database based on projectId
+     *
+     * @param projectId String
+     * @param newProject Project
+     * @return Boolean
+     */
+    fun updateProjectInDatabase(projectId: String, newProject: Project): Boolean{
+        return try {
+            val projectDocument = Document("project", projectToDocument(newProject))
+            val result = getDatabase().replaceOne(Document("project.id", projectId), projectDocument)
+
+            result.modifiedCount > 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
 }

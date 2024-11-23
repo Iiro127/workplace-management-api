@@ -24,11 +24,31 @@ class ProjectsApi: ProjectsApi {
         }
     }
 
+    override fun findProject(projectId: String?): Project {
+        return try {
+            projectsController.findProject(projectId!!)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override fun getProjects(): MutableList<Project> {
         return try {
             projectsController.getProjects()
         } catch (e: Exception){
             throw e
         }
+    }
+
+    override fun updateProject(projectId: String?, project: Project?): Project {
+       return try {
+           if (projectsController.updateProject(projectId!!, project!!)){
+               project
+           } else {
+               Project()
+           }
+       } catch (e: Exception) {
+           throw e
+       }
     }
 }
