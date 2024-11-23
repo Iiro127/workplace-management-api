@@ -12,6 +12,7 @@ open class MockProjectData {
                 createMockProjectDocument(
                     id = "123456",
                     title = "Test1",
+                    customer = "Apple",
                     dateAdded = "2023-10-13",
                     status = "Planning",
                     members = emptyList(),
@@ -20,6 +21,7 @@ open class MockProjectData {
                 createMockProjectDocument(
                     id = "oskd7w",
                     title = "Test2",
+                    customer = "Kesko",
                     dateAdded = "2021-07-13",
                     status = "In progress",
                     members = emptyList(),
@@ -31,6 +33,7 @@ open class MockProjectData {
         fun createMockProjectDocument(
             id: String,
             title: String,
+            customer: String,
             dateAdded: String,
             status: String,
             members: List<String>,
@@ -39,6 +42,7 @@ open class MockProjectData {
             return Document("project", Document()
                 .append("id", id)
                 .append("title", title)
+                .append("customer", customer)
                 .append("dateAdded", dateAdded)
                 .append("status", status)
                 .append("members", members)
@@ -56,6 +60,7 @@ open class MockProjectData {
             return createMockProjectDocument(
                     id = "654321",
                     title = "Test2",
+                    customer = "Microsoft",
                     dateAdded = "2023-10-13",
                     status = "Planning",
                     members = emptyList(),
@@ -65,6 +70,7 @@ open class MockProjectData {
         fun createMockProject(
             id: String,
             title: String,
+            customer: String,
             dateAdded: String,
             status: String,
             members: List<User>,
@@ -73,6 +79,7 @@ open class MockProjectData {
             val newProject = Project()
             newProject.id = id
             newProject.title = title
+            newProject.customer = customer
             newProject.dateAdded = dateAdded
             newProject.status = status
             newProject.members = members
