@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class ProjectsTest: MockProjectData() {
 
     @Test
-    fun testCreateAndFetchProject() {
+    fun testAddAndGetProject() {
         val result = databaseController.addProjectToDatabase(getProject())
 
         assertTrue(result)
@@ -27,7 +27,7 @@ class ProjectsTest: MockProjectData() {
     }
 
     @Test
-    fun testUpdateProjectInDatabase() {
+    fun testUpdateProject() {
         val initialProject = getProject().id("123123")
         val updatedProject = initialProject.title("Updated")
 
