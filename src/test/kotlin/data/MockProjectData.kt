@@ -7,25 +7,25 @@ import src.gen.java.org.openapitools.model.User
 open class MockProjectData {
     companion object{
 
-        fun getProjects(): MutableList<Document> {
+        fun getProjects(): MutableList<Project> {
             return mutableListOf(
-                createMockProjectDocument(
+                createMockProject(
                     id = "123456",
                     title = "Test1",
                     customer = "Apple",
                     dateAdded = "2023-10-13",
                     status = "Planning",
                     members = emptyList(),
-                    manager = createMockUserDocument()
+                    manager = null
                 ),
-                createMockProjectDocument(
+                createMockProject(
                     id = "oskd7w",
                     title = "Test2",
                     customer = "Kesko",
                     dateAdded = "2021-07-13",
                     status = "In progress",
                     members = emptyList(),
-                    manager = createMockUserDocument()
+                    manager = null
                 )
             )
         }
@@ -50,21 +50,19 @@ open class MockProjectData {
             )
         }
 
-        fun createMockUserDocument(): Document {
-            return Document()
-                .append("name", "Default Manager")
-                .append("email", "manager@example.com")
+        fun createMockUser(): User {
+            return User()
         }
 
-        fun getProject(): Document {
-            return createMockProjectDocument(
+        fun getProject(): Project {
+            return createMockProject(
                     id = "654321",
                     title = "Test2",
                     customer = "Microsoft",
                     dateAdded = "2023-10-13",
                     status = "Planning",
                     members = emptyList(),
-                    manager = createMockUserDocument()
+                    manager = null
                 )
         }
         fun createMockProject(
@@ -73,8 +71,8 @@ open class MockProjectData {
             customer: String,
             dateAdded: String,
             status: String,
-            members: List<User>,
-            manager: User,
+            members: List<User>?,
+            manager: User?,
         ):Project {
             val newProject = Project()
             newProject.id = id
