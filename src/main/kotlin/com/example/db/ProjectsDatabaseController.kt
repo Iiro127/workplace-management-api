@@ -15,7 +15,7 @@ import src.gen.java.org.openapitools.model.User
 class ProjectsDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
-    private lateinit var dbAddress: String
+    lateinit var dbAddress: String
 
     /**
      * Gets database for projects

@@ -1,88 +1,53 @@
 package com.example
 
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoClients
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
+import com.example.db.ProjectsDatabaseController
 import data.MockProjectData
 import io.restassured.RestAssured
 import org.bson.Document
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
 class ProjectsTest: MockProjectData() {
 
-    /**
-     * Tests getting all projects
-     */
     @Test
-    fun getAllProjects(){
-        val title = collection
-            .find()
+    fun testCreateAndFetchProject() {
+        val result = databaseController.addProjectToDatabase(getProject())
+
+        assertTrue(result)
+
+        val addedProject = databaseController.getDatabase()
+            .find(Document("project.id", "654321"))
             .first()
             ?.get("project", Document::class.java)
-            ?.getString("title")
 
-        assertEquals("Test1", title)
+        assertNotNull(addedProject)
+        assertEquals("Test2", addedProject?.getString("title"))
+        assertEquals("Planning", addedProject?.getString("status"))
     }
 
-    /**
-     * Tests project creation
-     */
     @Test
-    fun createProject(){
-        val projectDocument = Document()
-            .append("project", getProject())
-        val result = collection.insertOne(projectDocument)
+    fun testUpdateProjectInDatabase() {
+        val initialProject = getProject().id("123123")
+        val updatedProject = initialProject.title("Updated")
 
-        assertTrue(result.wasAcknowledged())
-    }
+        databaseController.addProjectToDatabase(initialProject)
+        val updateResult = databaseController.updateProjectInDatabase("123123", updatedProject)
 
-    /**
-     * Tests finding project
-     */
-    @Test
-    fun findProjectTest() {
-        collection.deleteMany(Document())
-        collection.insertMany(getProjects())
+        assertTrue(updateResult)
 
-        val projectTitle = collection
-            .find(Document("project.id", "123456"))
+        val updatedProjectDocument = databaseController.getDatabase()
+            .find(Document("project.id", "123123"))
             .first()
             ?.get("project", Document::class.java)
-            ?.getString("title")
 
-        assertEquals("Test1", projectTitle)
+        assertNotNull(updatedProjectDocument)
+        assertEquals("Updated", updatedProjectDocument?.getString("title"))
     }
 
-    /**
-     * Tests project updating
-     */
-    @Test
-    fun testUpdateProjectInfo() {
-        collection.updateOne(
-            Document("project.id", "123456"),
-            Document("\$set", Document("project.title", "Edited"))
-        )
-
-        val updatedProject = collection
-            .find(Document("project.id", "123456"))
-            .first()
-
-        val updatedTitle = updatedProject
-            ?.get("project", Document::class.java)
-            ?.getString("title")
-
-        assertEquals("Edited", updatedTitle)
-    }
 
     companion object {
-        private lateinit var mongoClient: MongoClient
-        private lateinit var database: MongoDatabase
-        private lateinit var collection: MongoCollection<Document>
+        private lateinit var databaseController: ProjectsDatabaseController
 
         @JvmStatic
         @BeforeAll
@@ -90,17 +55,8 @@ class ProjectsTest: MockProjectData() {
             RestAssured.baseURI = "http://localhost"
             RestAssured.port = 8081
 
-            mongoClient = MongoClients.create("mongodb://localhost:27017")
-            database = mongoClient.getDatabase("testdb")
-            collection = database.getCollection("projects")
-            collection.deleteMany(Document())
-            collection.insertMany(getProjects())
-        }
-
-        @JvmStatic
-        @AfterAll
-        fun cleanup(): Unit {
-            collection.deleteMany(Document())
+            databaseController = ProjectsDatabaseController()
+            databaseController.dbAddress = "mongodb://localhost:27017"
         }
     }
 }
