@@ -24,6 +24,14 @@ class ProjectsApi: ProjectsApi {
         }
     }
 
+    override fun deleteProject(projectId: String?) {
+        try {
+            projectsController.deleteProject(projectId!!)
+        } catch (e: Exception){
+            throw e
+        }
+    }
+
     override fun findProject(projectId: String?): Project {
         return try {
             projectsController.findProject(projectId!!)

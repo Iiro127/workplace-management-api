@@ -95,6 +95,15 @@ class ProjectsDatabaseController: DatabaseResource() {
             }!!
     }
 
+    /**
+     * Deletes project from database based on projectId
+     *
+     * @param projectId String
+     */
+    fun deleteProjectFromDatabase(projectId: String) {
+        getDatabase().deleteOne(Document("project.id", projectId))
+    }
+
 
     /**
      * Updates project in database based on projectId
