@@ -35,8 +35,8 @@ class ProjectsController {
      *
      * @param projectId String
      */
-    fun deleteProject(projectId: String) {
-        databaseController.deleteProjectFromDatabase(projectId)
+    fun deleteProject(projectId: String): Boolean {
+        return databaseController.deleteProjectFromDatabase(projectId)
     }
 
     /**

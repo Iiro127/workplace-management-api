@@ -45,6 +45,18 @@ class ProjectsTest: MockProjectData() {
         assertEquals("Updated", updatedProjectDocument?.getString("title"))
     }
 
+    @Test
+    fun testDeleteProject() {
+        databaseController.deleteProjectFromDatabase("123123")
+
+        val deletedProject = databaseController.getDatabase()
+            .find(Document("project.id", "123123"))
+            .firstOrNull()
+            ?.get("project", Document::class.java)
+
+        assertEquals(null, deletedProject)
+    }
+
 
     companion object {
         private lateinit var databaseController: ProjectsDatabaseController
