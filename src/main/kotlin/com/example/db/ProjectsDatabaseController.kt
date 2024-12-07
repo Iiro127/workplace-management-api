@@ -95,6 +95,18 @@ class ProjectsDatabaseController: DatabaseResource() {
             }!!
     }
 
+    /**
+     * Deletes project from database based on projectId
+     *
+     * @param projectId String
+     * @return Boolean
+     */
+    fun deleteProjectFromDatabase(projectId: String): Boolean {
+        val result = getDatabase().deleteMany(Document("project.id", projectId))
+
+        return result.deletedCount > 0
+    }
+
 
     /**
      * Updates project in database based on projectId

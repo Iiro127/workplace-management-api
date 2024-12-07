@@ -127,6 +127,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    delete:
+      operationId: deleteProject
+      description: Delete project
+      summary: Deletes a project based on id
+      tags:
+        - projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: projectId
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Project deleted.
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 
 components:
