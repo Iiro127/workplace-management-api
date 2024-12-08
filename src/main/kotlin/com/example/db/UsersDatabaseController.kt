@@ -24,6 +24,12 @@ class UsersDatabaseController: DatabaseResource() {
         return database.getCollection("users")
     }
 
+    /**
+     * Adds user to database
+     *
+     * @param user User
+     * @return Boolean
+     */
     fun addUserToDatabase(user: User): Boolean {
         return try {
             val userDocument = Document()

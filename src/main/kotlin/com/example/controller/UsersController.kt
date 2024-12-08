@@ -10,6 +10,12 @@ class UsersController {
     @Inject
     lateinit var databaseController: UsersDatabaseController
 
+    /**
+     * Creates a new user
+     *
+     * @param user User
+     * @return Boolean
+     */
     fun createUser(user: User): Boolean {
         return databaseController.addUserToDatabase(user)
     }
