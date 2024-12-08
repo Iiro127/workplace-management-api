@@ -2,10 +2,12 @@ package com.example.db
 
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
+import jakarta.enterprise.context.ApplicationScoped
 import org.bson.Document
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import src.gen.java.org.openapitools.model.User
 
+@ApplicationScoped
 class UsersDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
