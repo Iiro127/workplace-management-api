@@ -55,7 +55,7 @@ paths:
               $ref: '#/components/schemas/project'
       responses:
         '201':
-          description: created new vacation request
+          description: created new project
           content:
             application/json:
               schema:
@@ -149,7 +149,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
-
+  /users:
+    post:
+      operationId: createUser
+      summary: Create a new user
+      description: Add new user
+      tags:
+        - Users
+      requestBody:
+        description: New user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: created new user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
