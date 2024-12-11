@@ -19,4 +19,8 @@ class UsersController {
     fun createUser(user: User): Boolean {
         return databaseController.addUserToDatabase(user)
     }
+
+    fun getUsers(): MutableList<User>{
+        return databaseController.getUsersFromDatabase().toMutableList()
+    }
 }

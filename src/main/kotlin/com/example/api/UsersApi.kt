@@ -22,4 +22,12 @@ class UsersApi: UsersApi {
             throw e
         }
     }
+
+    override fun getUsers(): MutableList<User> {
+        return try {
+            usersController.getUsers()
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }
