@@ -20,7 +20,16 @@ class UsersController {
         return databaseController.addUserToDatabase(user)
     }
 
+    /**
+     * Gets all users
+     *
+     * @return MutableList<User>
+     */
     fun getUsers(): MutableList<User>{
         return databaseController.getUsersFromDatabase().toMutableList()
+    }
+
+    fun findUser(userid: String): User{
+        return databaseController.findUserFromDatabase(userid)
     }
 }

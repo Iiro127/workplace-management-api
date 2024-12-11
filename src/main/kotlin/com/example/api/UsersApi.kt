@@ -23,6 +23,14 @@ class UsersApi: UsersApi {
         }
     }
 
+    override fun findUser(userid: String?): User {
+        return try {
+            usersController.findUser(userid!!)
+        } catch (e: Exception){
+            throw e
+        }
+    }
+
     override fun getUsers(): MutableList<User> {
         return try {
             usersController.getUsers()

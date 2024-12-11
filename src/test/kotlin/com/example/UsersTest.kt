@@ -3,17 +3,26 @@ package com.example
 import com.example.db.UsersDatabaseController
 import data.MockUserData
 import io.restassured.RestAssured
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.bson.Document
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
 class UsersTest: MockUserData() {
 
     @Test
-    fun addUserTest() {
+    fun addAndFetchUserTest() {
         val result = databaseController.addUserToDatabase(getUser())
+        val addedUser = databaseController.getDatabase()
+            .find(Document("user.id", "654321"))
+            .first()
+            ?.get("user", Document::class.java)
 
         assertTrue(result)
+        assertNotNull(addedUser)
+        assertEquals("Markku", addedUser?.getString("firstName"))
+        assertTrue(addedUser!!.getBoolean("isActive"))
     }
 
     companion object {
