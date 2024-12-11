@@ -198,6 +198,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /users/{userid}:
+    get:
+      operationId: findUser
+      summary: Find a user by id
+      description: Find a user by id
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: userId
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Found user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
