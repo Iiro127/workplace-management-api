@@ -57,4 +57,18 @@ class UsersDatabaseController: DatabaseResource() {
 
         }.toList()
     }
+
+    fun findUserFromDatabase(userid: String): User {
+        return getDatabase()
+            .find(Document("user.id", userid))
+            .firstOrNull()
+            ?.get("user", Document::class.java)
+            ?.let { userDoc ->
+                User()
+                    .id(userDoc.getString("id"))
+                    .firstName(userDoc.getString("firstName"))
+                    .lastName(userDoc.getString("lastName"))
+                    .isActive(userDoc.getBoolean("isActive"))
+            }!!
+    }
 }
