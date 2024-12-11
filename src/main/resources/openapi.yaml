@@ -150,6 +150,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/error"
   /users:
+    get:
+      operationId: getUsers
+      description: Gets all users
+      summary: Gets all users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Get list of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/user"
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+
     post:
       operationId: createUser
       summary: Create a new user
