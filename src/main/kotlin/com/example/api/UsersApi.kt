@@ -38,4 +38,16 @@ class UsersApi: UsersApi {
             throw e
         }
     }
+
+    override fun updateUser(userid: String?, user: User?): User {
+        return try {
+            if (usersController.updateUser(userid!!, user!!)){
+                user
+            } else {
+                User()
+            }
+        } catch (e: Exception){
+            throw e
+        }
+    }
 }

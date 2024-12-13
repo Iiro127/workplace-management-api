@@ -32,4 +32,8 @@ class UsersController {
     fun findUser(userid: String): User{
         return databaseController.findUserFromDatabase(userid)
     }
+
+    fun updateUser(userid: String, user: User): Boolean {
+        return databaseController.updateUserInDatabase(userid, user)
+    }
 }
