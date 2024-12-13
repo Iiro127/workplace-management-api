@@ -225,6 +225,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    put:
+      operationId: updateUser
+      summary: Update an existing user
+      description: Update user
+      tags:
+        - Users
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          description: userid
+          schema:
+            type: string
+      requestBody:
+        description: Updated user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        "200":
+          description: Updated user information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
