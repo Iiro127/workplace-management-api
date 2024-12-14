@@ -101,4 +101,10 @@ class UsersDatabaseController: DatabaseResource() {
             false
         }
     }
+
+    fun deleteUserInDatabase(userid: String): Boolean {
+        val result = getDatabase().deleteMany(Document("user.id", userid))
+
+        return result.deletedCount > 0
+    }
 }

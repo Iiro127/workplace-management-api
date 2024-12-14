@@ -23,6 +23,14 @@ class UsersApi: UsersApi {
         }
     }
 
+    override fun deleteUser(userid: String?) {
+        try {
+            usersController.deleteUser(userid!!)
+        } catch (e: Exception){
+            throw e
+        }
+    }
+
     override fun findUser(userid: String?): User {
         return try {
             usersController.findUser(userid!!)

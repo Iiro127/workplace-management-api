@@ -43,6 +43,18 @@ class UsersTest: MockUserData() {
         assertEquals("Updated", updatedUserDocument?.getString("firstName"))
     }
 
+    @Test
+    fun testDeleteUser() {
+        databaseController.deleteUserInDatabase("123123")
+
+        val deletedUser = databaseController.getDatabase()
+            .find(Document("user.id", "123123"))
+            .firstOrNull()
+            ?.get("project", Document::class.java)
+
+        assertNull(deletedUser)
+    }
+
     companion object {
         private lateinit var databaseController: UsersDatabaseController
 
