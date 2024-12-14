@@ -54,7 +54,7 @@ class ProjectsTest: MockProjectData() {
             .firstOrNull()
             ?.get("project", Document::class.java)
 
-        assertEquals(null, deletedProject)
+        assertNull(deletedProject)
     }
 
 

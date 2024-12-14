@@ -36,4 +36,8 @@ class UsersController {
     fun updateUser(userid: String, user: User): Boolean {
         return databaseController.updateUserInDatabase(userid, user)
     }
+
+    fun deleteUser(userid: String): Boolean {
+        return databaseController.deleteUserInDatabase(userid)
+    }
 }
