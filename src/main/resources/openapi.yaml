@@ -258,6 +258,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    delete:
+      operationId: deleteUser
+      description: Delete user
+      summary: Deletes a user based on id
+      tags:
+        - Users
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          description: userid
+          schema:
+            type: string
+      responses:
+        "204":
+          description: User deleted.
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
