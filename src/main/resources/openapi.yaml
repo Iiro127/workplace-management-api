@@ -280,6 +280,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /invoices:
+    get:
+      operationId: getInvoices
+      description: Get all invoices
+      summary: Get all invoices
+      tags:
+        - Invoices
+      responses:
+        '200':
+          description: All invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/invoice"
 
 components:
   schemas:
