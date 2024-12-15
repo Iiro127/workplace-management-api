@@ -336,4 +336,27 @@ components:
             $ref: "#/components/schemas/user"
         manager:
           $ref: "#/components/schemas/user"
-
+    invoice:
+      description: Schema for invoice
+      properties:
+        id:
+          type: string
+          description: Id of the invoice
+        title:
+          type: string
+          description: Title of the invoice
+        sum:
+          type: number
+          description: Sum to be paid
+        userFirstName:
+          type: string
+          description: First name of the user who submitted the invoice
+        dateAdded:
+          type: string
+          description: Date when invoice was submitted
+        status:
+          type: string
+          description: Status of the invoice
+        bankAccount:
+          type: string
+          description: Bank account where the sum is paid
