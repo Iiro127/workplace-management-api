@@ -32,7 +32,7 @@ class InvoicesDatabaseController {
             Invoice()
                 .id(invoiceDoc.getString("id"))
                 .title(invoiceDoc.getString("title"))
-                .sum(invoiceDoc.getString("sum").toBigDecimal())
+                .sum(invoiceDoc.getDouble("sum").toBigDecimal())
                 .userFirstName(invoiceDoc.getString("userFirstName"))
                 .dateAdded(invoiceDoc.getString("dateAdded"))
                 .status(invoiceDoc.getString("status"))
