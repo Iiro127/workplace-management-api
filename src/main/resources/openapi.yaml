@@ -132,7 +132,7 @@ paths:
       description: Delete project
       summary: Deletes a project based on id
       tags:
-        - projects
+        - Projects
       parameters:
         - name: projectId
           in: path
