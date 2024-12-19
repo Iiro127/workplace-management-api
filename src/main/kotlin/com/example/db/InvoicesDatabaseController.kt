@@ -8,7 +8,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty
 import src.gen.java.org.openapitools.model.Invoice
 
 @ApplicationScoped
-class InvoicesDatabaseController {
+class InvoicesDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
     lateinit var dbAddress: String
@@ -23,6 +23,12 @@ class InvoicesDatabaseController {
         val database = client.getDatabase("workplace_management-db")
         return database.getCollection("invoices")
     }
+
+    /**
+     * Gets all invoices from database
+     *
+     * @return List<Invoice>
+     */
     fun getInvoicesFromDatabase(): List<Invoice> {
         val collection = getDatabase().find()
 
@@ -40,4 +46,21 @@ class InvoicesDatabaseController {
         }.toList()
     }
 
+    /**
+     * Adds an invoice to database
+     *
+     * @param invoice Invoice
+     * @return Boolean
+     */
+    fun addInvoiceToDatabase(invoice: Invoice): Boolean {
+        return try {
+            val invoiceDocument = Document()
+                .append("invoice", invoiceToDocument(invoice))
+            getDatabase().insertOne(invoiceDocument)
+
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

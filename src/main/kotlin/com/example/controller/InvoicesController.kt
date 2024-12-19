@@ -11,7 +11,22 @@ class InvoicesController {
     @Inject
     lateinit var databaseController: InvoicesDatabaseController
 
+    /**
+     * Gets all invoices
+     *
+     * @return MutableList<Invoice>
+     */
     fun getInvoices(): MutableList<Invoice> {
         return databaseController.getInvoicesFromDatabase().toMutableList()
+    }
+
+    /**
+     * Creates a new invoice
+     *
+     * @param invoice Invoice
+     * @return Boolean
+     */
+    fun createInvoice(invoice: Invoice): Boolean {
+        return databaseController.addInvoiceToDatabase(invoice)
     }
 }
