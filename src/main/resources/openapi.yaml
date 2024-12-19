@@ -296,6 +296,32 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/invoice"
+    post:
+      operationId: createInvoice
+      description: Create a new invoice
+      summary: Create a new invoice
+      tags:
+        - Invoices
+      requestBody:
+        description: A new invoice
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoice"
+      responses:
+        '201':
+          description: created new invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invoice'
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:

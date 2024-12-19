@@ -1,6 +1,7 @@
 package com.example.db
 
 import org.bson.Document
+import src.gen.java.org.openapitools.model.Invoice
 import src.gen.java.org.openapitools.model.Project
 import src.gen.java.org.openapitools.model.User
 
@@ -35,6 +36,23 @@ abstract class DatabaseResource {
                 userToDocument(user)
             })
             .append("manager", project.manager?.let { userToDocument(it) })
+    }
+
+    /**
+     * Converts invoice to MongoDB document
+     *
+     * @param invoice Invoice
+     * @return Document
+     */
+    fun invoiceToDocument(invoice: Invoice): Document {
+        return Document()
+            .append("id", invoice.id)
+            .append("title", invoice.title)
+            .append("sum", invoice.sum)
+            .append("userFirstName", invoice.userFirstName)
+            .append("dateAdded", invoice.dateAdded)
+            .append("status", invoice.status)
+            .append("bankAccount", invoice.bankAccount)
     }
 
     /**
