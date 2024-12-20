@@ -2,7 +2,7 @@ package data
 
 import src.gen.java.org.openapitools.model.Invoice
 
-class MockInvoiceData {
+open class MockInvoiceData {
     companion object{
 
         /**
@@ -30,6 +30,18 @@ class MockInvoiceData {
                     status = "Paid",
                     bankAccount = "0987654321"
                 )
+            )
+        }
+
+        fun getInvoice(): Invoice {
+            return createMockInvoice(
+                id = "abcdef",
+                title = "Title123",
+                sum = 44.00,
+                userFirstName = "Tomppa",
+                dateAdded = "2024-10-12",
+                status = "Paid",
+                bankAccount = "1239874560"
             )
         }
 
