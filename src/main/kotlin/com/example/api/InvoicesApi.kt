@@ -23,6 +23,14 @@ class InvoicesApi: InvoicesApi {
         }
     }
 
+    override fun findInvoice(invoiceId: String?): Invoice {
+        return try {
+            invoicesController.findInvoice(invoiceId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override fun getInvoices(): MutableList<Invoice> {
         return try {
             invoicesController.getInvoices()
