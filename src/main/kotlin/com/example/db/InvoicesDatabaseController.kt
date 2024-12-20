@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import org.bson.Document
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import src.gen.java.org.openapitools.model.Invoice
+import src.gen.java.org.openapitools.model.Project
 
 @ApplicationScoped
 class InvoicesDatabaseController: DatabaseResource() {
@@ -62,5 +63,28 @@ class InvoicesDatabaseController: DatabaseResource() {
         } catch (e: Exception) {
             false
         }
+    }
+
+    /**
+     * Finds an invoice from database with id
+     *
+     * @param invoiceId String
+     * @return Invoice
+     */
+    fun findInvoiceFromDatabase(invoiceId: String?): Invoice {
+        return getDatabase()
+            .find(Document("invoice.id", invoiceId))
+            .firstOrNull()
+            ?.get("invoice", Document::class.java)
+            ?.let { invoiceDoc ->
+                Invoice()
+                    .id(invoiceDoc.getString("id"))
+                    .title(invoiceDoc.getString("title"))
+                    .sum(invoiceDoc.getDouble("sum").toBigDecimal())
+                    .userFirstName(invoiceDoc.getString("userFirstName"))
+                    .status(invoiceDoc.getString("status"))
+                    .dateAdded(invoiceDoc.getString("dateAdded"))
+                    .bankAccount(invoiceDoc.getString("bankAccount"))
+            }!!
     }
 }

@@ -29,4 +29,8 @@ class InvoicesController {
     fun createInvoice(invoice: Invoice): Boolean {
         return databaseController.addInvoiceToDatabase(invoice)
     }
+
+    fun findInvoice(invoiceId: String?): Invoice {
+        return databaseController.findInvoiceFromDatabase(invoiceId)
+    }
 }
