@@ -322,6 +322,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /invoices/{invoiceId}:
+    get:
+      operationId: findInvoice
+      description: Find an invoice with id
+      summary: Find an invoice with id
+      tags:
+        - Invoices
+      responses:
+        '200':
+          description: Found invoice.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoice"
+        "default":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:
