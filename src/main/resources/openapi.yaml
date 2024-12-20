@@ -329,6 +329,13 @@ paths:
       summary: Find an invoice with id
       tags:
         - Invoices
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          description: invoice id
+          schema:
+            type: string
       responses:
         '200':
           description: Found invoice.
