@@ -349,6 +349,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    delete:
+      operationId: deleteInvoice
+      description: Delete an invoice
+      summary: Delete an invoice
+      tags:
+        - Invoices
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          description: invoice id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice deleted
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
 
 components:
   schemas:

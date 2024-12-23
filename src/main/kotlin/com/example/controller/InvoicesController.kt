@@ -33,4 +33,8 @@ class InvoicesController {
     fun findInvoice(invoiceId: String?): Invoice {
         return databaseController.findInvoiceFromDatabase(invoiceId)
     }
+
+    fun deleteInvoice(invoiceId: String?): Boolean {
+        return databaseController.deleteInvoiceFromDatabase(invoiceId)
+    }
 }

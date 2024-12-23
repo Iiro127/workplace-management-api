@@ -87,4 +87,10 @@ class InvoicesDatabaseController: DatabaseResource() {
                     .bankAccount(invoiceDoc.getString("bankAccount"))
             }!!
     }
+
+    fun deleteInvoiceFromDatabase(invoiceId: String?): Boolean {
+        val result = getDatabase().deleteMany(Document("invoice.id", invoiceId))
+
+        return result.deletedCount > 0
+    }
 }

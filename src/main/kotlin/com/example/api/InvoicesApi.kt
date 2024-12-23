@@ -23,6 +23,14 @@ class InvoicesApi: InvoicesApi {
         }
     }
 
+    override fun deleteInvoice(invoiceId: String?): Boolean {
+        return try {
+            invoicesController.deleteInvoice(invoiceId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override fun findInvoice(invoiceId: String?): Invoice {
         return try {
             invoicesController.findInvoice(invoiceId)
