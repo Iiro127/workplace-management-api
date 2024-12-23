@@ -24,8 +24,8 @@ class ProjectsApi: ProjectsApi {
         }
     }
 
-    override fun deleteProject(projectId: String?) {
-        try {
+    override fun deleteProject(projectId: String?): Boolean {
+        return try {
             projectsController.deleteProject(projectId!!)
         } catch (e: Exception){
             throw e

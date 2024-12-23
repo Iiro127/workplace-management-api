@@ -47,14 +47,11 @@ class ProjectsTest: MockProjectData() {
 
     @Test
     fun testDeleteProject() {
-        databaseController.deleteProjectFromDatabase("123123")
+        val deleteSuccess = databaseController.deleteProjectFromDatabase("123123")
+        val deleteFail = databaseController.deleteProjectFromDatabase("zdkfhjkfgnj")
 
-        val deletedProject = databaseController.getDatabase()
-            .find(Document("project.id", "123123"))
-            .firstOrNull()
-            ?.get("project", Document::class.java)
-
-        assertNull(deletedProject)
+        assertTrue(deleteSuccess)
+        assertFalse(deleteFail)
     }
 
 

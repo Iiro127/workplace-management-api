@@ -45,14 +45,11 @@ class UsersTest: MockUserData() {
 
     @Test
     fun testDeleteUser() {
-        databaseController.deleteUserInDatabase("123123")
+        val deleteSuccess = databaseController.deleteUserInDatabase("123123")
+        val deleteFail = databaseController.deleteUserInDatabase("zdkfhjkfgnj")
 
-        val deletedUser = databaseController.getDatabase()
-            .find(Document("user.id", "123123"))
-            .firstOrNull()
-            ?.get("project", Document::class.java)
-
-        assertNull(deletedUser)
+        assertTrue(deleteSuccess)
+        assertFalse(deleteFail)
     }
 
     companion object {
