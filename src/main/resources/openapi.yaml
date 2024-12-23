@@ -141,8 +141,12 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: Project deleted.
+        '200':
+          description: Project deleted
+          content:
+            application/json:
+              schema:
+                type: boolean
         "default":
           description: Invalid request.
           content:
@@ -272,8 +276,12 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: User deleted.
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                type: boolean
         "default":
           description: Invalid request.
           content:

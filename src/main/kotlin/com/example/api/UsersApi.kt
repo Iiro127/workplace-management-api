@@ -23,8 +23,8 @@ class UsersApi: UsersApi {
         }
     }
 
-    override fun deleteUser(userid: String?) {
-        try {
+    override fun deleteUser(userid: String?): Boolean {
+        return try {
             usersController.deleteUser(userid!!)
         } catch (e: Exception){
             throw e
