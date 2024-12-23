@@ -5,6 +5,8 @@ import data.MockInvoiceData
 import io.restassured.RestAssured
 import org.bson.Document
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
@@ -22,6 +24,15 @@ class InvoicesTest: MockInvoiceData() {
         Assertions.assertNotNull(addedInvoice)
         Assertions.assertEquals("Title123", addedInvoice?.getString("title"))
         Assertions.assertEquals("Paid", addedInvoice?.getString("status"))
+    }
+
+    @Test
+    fun testDeleteInvoice(){
+        val deleteSuccess = databaseController.deleteInvoiceFromDatabase("abcdef")
+        val deleteFail = databaseController.deleteInvoiceFromDatabase("kjfjfjfjfjfjf")
+
+        assertTrue(deleteSuccess)
+        assertFalse(deleteFail)
     }
 
     companion object {
