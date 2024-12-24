@@ -357,6 +357,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+    put:
+      operationId: updateInvoice
+      description: Update an invoice
+      summary: Update an invoice
+      tags:
+        - Invoices
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          description: invoice id
+          schema:
+            type: string
+      requestBody:
+        description: Updated invoice
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoice"
+      responses:
+        '200':
+          description: Invoice updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoice"
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
     delete:
       operationId: deleteInvoice
       description: Delete an invoice
