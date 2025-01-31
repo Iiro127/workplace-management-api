@@ -46,4 +46,8 @@ class InvoicesApi: InvoicesApi {
             throw e
         }
     }
+
+    override fun updateInvoice(invoiceId: String?, invoice: Invoice?): Invoice {
+        TODO("Not yet implemented")
+    }
 }
