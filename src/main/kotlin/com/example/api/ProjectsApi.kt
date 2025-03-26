@@ -1,13 +1,14 @@
 package com.example.api
 
 import com.example.controller.ProjectsController
-import jakarta.enterprise.context.Initialized
+import jakarta.annotation.security.PermitAll
 import jakarta.enterprise.context.RequestScoped
 import jakarta.inject.Inject
 import src.gen.java.org.openapitools.api.ProjectsApi
 import src.gen.java.org.openapitools.model.Project
 
 @RequestScoped
+@PermitAll
 class ProjectsApi: ProjectsApi {
 
     @Inject

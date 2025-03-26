@@ -31,6 +31,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("io.swagger:swagger-annotations:1.6.3")
     implementation("org.hibernate.validator:hibernate-validator:6.0.13.Final")
+    implementation("io.quarkus:quarkus-oidc")
+    implementation("io.quarkus:quarkus-smallrye-jwt")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
     testImplementation("org.wiremock:wiremock:3.9.2")
