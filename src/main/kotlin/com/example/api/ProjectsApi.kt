@@ -41,6 +41,10 @@ class ProjectsApi: ProjectsApi {
         }
     }
 
+    override fun findProjectByUserId(userId: String?): MutableList<Project> {
+        TODO("Not yet implemented")
+    }
+
     override fun getProjects(): MutableList<Project> {
         return try {
             projectsController.getProjects()

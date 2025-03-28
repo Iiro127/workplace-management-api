@@ -153,6 +153,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /projects/users/{userId}:
+    get:
+      operationId: findProjectByUserId
+      description: Find project by user id
+      summary: Finds project by user id
+      tags:
+        - Projects
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: userId
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get list of all projects with user id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/project"
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+
   /users:
     get:
       operationId: getUsers
