@@ -126,4 +126,8 @@ class ProjectsDatabaseController: DatabaseResource() {
             false
         }
     }
+
+    fun findProjectsForUser(): MutableList<Project> {
+        return emptyList<Project>().toMutableList()
+    }
 }

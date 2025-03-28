@@ -59,4 +59,8 @@ class ProjectsController {
     fun updateProject(projectId: String, project: Project): Boolean {
         return databaseController.updateProjectInDatabase(projectId, project)
     }
+
+    fun findProjectsForUser(): MutableList<Project> {
+        return databaseController.findProjectsForUser()
+    }
 }

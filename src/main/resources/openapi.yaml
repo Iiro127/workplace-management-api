@@ -153,24 +153,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
-  /projects/users/{userId}:
+  /projects/users:
     get:
-      operationId: findProjectByUserId
-      description: Find project by user id
-      summary: Finds project by user id
+      operationId: findProjectsForUser
+      description: Find projects for logged in user
+      summary: Finds projects for logged in used
       tags:
         - Projects
         - User
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: userId
-          schema:
-            type: string
       responses:
         '200':
-          description: Get list of all projects with user id
+          description: Get list of all projects for logged in user
           content:
             application/json:
               schema:
