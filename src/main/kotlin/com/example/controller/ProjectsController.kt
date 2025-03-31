@@ -61,6 +61,6 @@ class ProjectsController {
     }
 
     fun findProjectsForUser(): MutableList<Project> {
-        return databaseController.findProjectsForUser()
+        return databaseController.findProjectsForUserFromDatabase()
     }
 }

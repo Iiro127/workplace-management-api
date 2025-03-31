@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import org.bson.Document
 import org.eclipse.microprofile.config.inject.ConfigProperty
+import org.eclipse.microprofile.jwt.JsonWebToken
 import src.gen.java.org.openapitools.model.Project
 import src.gen.java.org.openapitools.model.User
 
@@ -16,6 +17,9 @@ class ProjectsDatabaseController: DatabaseResource() {
 
     @ConfigProperty(name = "database.access.endpoint")
     lateinit var dbAddress: String
+
+    @Inject
+    lateinit var jwt: JsonWebToken
 
     /**
      * Gets database for projects
@@ -127,7 +131,32 @@ class ProjectsDatabaseController: DatabaseResource() {
         }
     }
 
-    fun findProjectsForUser(): MutableList<Project> {
-        return emptyList<Project>().toMutableList()
+    fun findProjectsForUserFromDatabase(): MutableList<Project> {
+        val collection = getDatabase().find()
+        val userId = jwt.claim<String>("ID").orElse(null)
+
+        return collection.mapNotNull { doc ->
+            val projectDoc = doc.get("project", Document::class.java)
+
+            val members = projectDoc.getList("members", Document::class.java)?.map { memberDoc ->
+                mapUser(memberDoc)
+            } ?: emptyList()
+
+            if (members.any { it.id == userId }) {
+                Project()
+                    .id(projectDoc.getString("id"))
+                    .title(projectDoc.getString("title"))
+                    .customer(projectDoc.getString("customer"))
+                    .status(projectDoc.getString("status"))
+                    .dateAdded(projectDoc.getString("dateAdded"))
+                    .members(members)
+                    .manager(projectDoc.get("manager", Document::class.java)?.let { managerDoc ->
+                        mapUser(managerDoc)
+                    })
+            } else {
+                null
+            }
+        }.toMutableList()
+        //return emptyList<Project>().toMutableList()
     }
 }
