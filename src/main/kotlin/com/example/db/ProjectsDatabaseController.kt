@@ -1,16 +1,13 @@
 package com.example.db
 
-import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoIterable
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import org.bson.Document
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.eclipse.microprofile.jwt.JsonWebToken
 import src.gen.java.org.openapitools.model.Project
-import src.gen.java.org.openapitools.model.User
 
 @ApplicationScoped
 class ProjectsDatabaseController: DatabaseResource() {
@@ -157,6 +154,5 @@ class ProjectsDatabaseController: DatabaseResource() {
                 null
             }
         }.toMutableList()
-        //return emptyList<Project>().toMutableList()
     }
 }
