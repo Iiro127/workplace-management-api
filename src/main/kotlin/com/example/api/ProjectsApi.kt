@@ -13,6 +13,8 @@ class ProjectsApi: ProjectsApi {
 
     @Inject
     lateinit var projectsController: ProjectsController
+
+
     override fun createProject(project: Project?): Project {
         return try {
             if (projectsController.createProject(project!!)){
@@ -37,6 +39,14 @@ class ProjectsApi: ProjectsApi {
         return try {
             projectsController.findProject(projectId!!)
         } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun findProjectsForUser(): MutableList<Project> {
+        return try {
+            projectsController.findProjectsForUser()
+        } catch (e: Exception){
             throw e
         }
     }

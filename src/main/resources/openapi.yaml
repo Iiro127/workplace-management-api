@@ -153,6 +153,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /projects/users:
+    get:
+      operationId: findProjectsForUser
+      description: Find projects for logged in user
+      summary: Finds projects for logged in used
+      tags:
+        - Projects
+        - User
+      responses:
+        '200':
+          description: Get list of all projects for logged in user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/project"
+        "default":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+
   /users:
     get:
       operationId: getUsers
