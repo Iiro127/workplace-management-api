@@ -62,6 +62,7 @@ class ProjectsDatabaseController: DatabaseResource() {
      * @return Boolean
      */
     fun addProjectToDatabase(project: Project?): Boolean {
+        println(project)
         return try {
             val projectDocument = Document()
                 .append("project", projectToDocument(project!!))
@@ -131,6 +132,8 @@ class ProjectsDatabaseController: DatabaseResource() {
     fun findProjectsForUserFromDatabase(): MutableList<Project> {
         val collection = getDatabase().find()
         val userId = jwt.claim<String>("ID").orElse(null)
+        println(userId)
+
 
         return collection.mapNotNull { doc ->
             val projectDoc = doc.get("project", Document::class.java)

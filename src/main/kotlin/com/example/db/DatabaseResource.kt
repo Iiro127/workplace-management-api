@@ -31,6 +31,7 @@ abstract class DatabaseResource {
             .append("id", project.id)
             .append("title", project.title)
             .append("dateAdded", project.dateAdded)
+            .append("customer", project.customer)
             .append("status", project.status)
             .append("members", project.members.map { user ->
                 userToDocument(user)
