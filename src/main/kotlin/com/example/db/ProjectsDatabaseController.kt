@@ -39,13 +39,13 @@ class ProjectsDatabaseController: DatabaseResource() {
 
         return collection.map { doc ->
             val projectDoc = doc.get("project", Document::class.java)
-
             Project()
                 .id(projectDoc.getString("id"))
                 .title(projectDoc.getString("title"))
                 .customer(projectDoc.getString("customer"))
                 .status(projectDoc.getString("status"))
                 .dateAdded(projectDoc.getString("dateAdded"))
+                .finishEstimate(projectDoc.getString("finishEstimate"))
                 .members(projectDoc.getList("members", Document::class.java)?.map { memberDoc ->
                     mapUser(memberDoc)
                 } ?: emptyList())
@@ -92,6 +92,7 @@ class ProjectsDatabaseController: DatabaseResource() {
                     .customer(projectDoc.getString("customer"))
                     .status(projectDoc.getString("status"))
                     .dateAdded(projectDoc.getString("dateAdded"))
+                    .finishEstimate(projectDoc.getString("finishEstimate"))
                     .members(projectDoc.getList("members", Document::class.java)?.mapNotNull(::mapUser) ?: emptyList())
                     .manager(projectDoc.get("manager", Document::class.java)?.let(::mapUser))
             }!!
@@ -149,6 +150,7 @@ class ProjectsDatabaseController: DatabaseResource() {
                     .customer(projectDoc.getString("customer"))
                     .status(projectDoc.getString("status"))
                     .dateAdded(projectDoc.getString("dateAdded"))
+                    .finishEstimate(projectDoc.getString("finishEstimate"))
                     .members(members)
                     .manager(projectDoc.get("manager", Document::class.java)?.let { managerDoc ->
                         mapUser(managerDoc)

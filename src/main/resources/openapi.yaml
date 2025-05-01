@@ -454,6 +454,9 @@ components:
         dateAdded:
           type: string
           description: Date when project was added
+        finishEstimate:
+          type: string
+          description: Date when project is estimated to finish
         status:
           type: string
           description: Project status

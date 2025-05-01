@@ -60,6 +60,11 @@ class ProjectsController {
         return databaseController.updateProjectInDatabase(projectId, project)
     }
 
+    /**
+     * Finds projects for user
+     *
+     * @return MutableList<Project>
+     */
     fun findProjectsForUser(): MutableList<Project> {
         return databaseController.findProjectsForUserFromDatabase()
     }
