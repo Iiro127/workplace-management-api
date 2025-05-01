@@ -29,14 +29,33 @@ class UsersController {
         return databaseController.getUsersFromDatabase().toMutableList()
     }
 
+    /**
+     * Finds user based on id
+     *
+     * @param userid String
+     * @return User
+     */
     fun findUser(userid: String): User{
         return databaseController.findUserFromDatabase(userid)
     }
 
+    /**
+     * Updates user based on id
+     *
+     * @param userid String
+     * @param user User
+     * @return Boolean
+     */
     fun updateUser(userid: String, user: User): Boolean {
         return databaseController.updateUserInDatabase(userid, user)
     }
 
+    /**
+     * Deletes user based on id
+     *
+     * @param userid String
+     * @return Boolean
+     */
     fun deleteUser(userid: String): Boolean {
         return databaseController.deleteUserInDatabase(userid)
     }
