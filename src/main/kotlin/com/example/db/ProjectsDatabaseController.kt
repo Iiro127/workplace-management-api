@@ -130,11 +130,15 @@ class ProjectsDatabaseController: DatabaseResource() {
         }
     }
 
+    /**
+     * Finds projects on the database for logged in user
+     *
+     * @return MutableList<Project>
+     */
     fun findProjectsForUserFromDatabase(): MutableList<Project> {
         val collection = getDatabase().find()
         val userId = jwt.claim<String>("ID").orElse(null)
         println(userId)
-
 
         return collection.mapNotNull { doc ->
             val projectDoc = doc.get("project", Document::class.java)
