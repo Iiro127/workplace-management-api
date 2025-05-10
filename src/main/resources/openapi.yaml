@@ -312,6 +312,107 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error"
+  /events:
+    get:
+      operationId: getEvents
+      description: Get all events
+      summary: Get all events
+      tags:
+        - Events
+      responses:
+        '200':
+          description: All events for user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/event'
+    post:
+      operationId: createEvent
+      description: Creates an event
+      summary: Creates an event
+      tags:
+        - Events
+      requestBody:
+        description: New event
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event'
+      responses:
+        '201':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+  /events/{eventid}:
+    get:
+      operationId: findEvent
+      description: Find event with id
+      summary: Find event with id
+      tags:
+        - Events
+      parameters:
+        - name: eventid
+          in: path
+          required: true
+          description: Event id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event with id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+    delete:
+      operationId: deleteEvent
+      description: Deletes event with id
+      summary: Deletes event with id
+      tags:
+        - Events
+      parameters:
+        - name: eventid
+          in: path
+          required: true
+          description: Event id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event deleted
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /events/users/{userid}:
+    get:
+      operationId: getUserEvents
+      description: Get all events for user
+      summary: Get all events for user
+      tags:
+        - Users
+        - Events
+      parameters:
+        - name: userid
+          in: path
+          required: true
+          description: id if the user to fetch events for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: All events for user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/event'
   /invoices:
     get:
       operationId: getInvoices
@@ -466,6 +567,18 @@ components:
             $ref: "#/components/schemas/user"
         manager:
           $ref: "#/components/schemas/user"
+    event:
+      description: Schema for event in a calendar
+      properties:
+        id:
+          type: string
+          description: Event id
+        title:
+          type: string
+          description: Event title
+        date:
+          type: string
+          description: Event date
     invoice:
       description: Schema for invoice
       properties:
