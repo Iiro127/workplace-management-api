@@ -389,7 +389,7 @@ paths:
             application/json:
               schema:
                 type: boolean
-  /events/users/{userid}:
+  /events/users:
     get:
       operationId: getUserEvents
       description: Get all events for user
@@ -397,13 +397,6 @@ paths:
       tags:
         - Users
         - Events
-      parameters:
-        - name: userid
-          in: path
-          required: true
-          description: id if the user to fetch events for
-          schema:
-            type: string
       responses:
         '200':
           description: All events for user
@@ -579,6 +572,9 @@ components:
         date:
           type: string
           description: Event date
+        userid:
+          type: string
+          description: id of who created the event
     invoice:
       description: Schema for invoice
       properties:

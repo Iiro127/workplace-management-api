@@ -1,6 +1,7 @@
 package com.example.db
 
 import org.bson.Document
+import src.gen.java.org.openapitools.model.Event
 import src.gen.java.org.openapitools.model.Invoice
 import src.gen.java.org.openapitools.model.Project
 import src.gen.java.org.openapitools.model.User
@@ -18,6 +19,20 @@ abstract class DatabaseResource {
             .firstName(doc.getString("firstName"))
             .lastName(doc.getString("lastName"))
             .isActive(doc.getBoolean("isActive"))
+    }
+
+    /**
+     * Maps event fetched from database
+     *
+     * @param doc Document
+     * @return Event
+     */
+    fun mapEvent(doc: Document): Event {
+        return Event()
+            .id(doc.getString("id"))
+            .title(doc.getString("title"))
+            .date(doc.getString("date"))
+            .userid(doc.getString("userid"))
     }
 
     /**
@@ -69,5 +84,19 @@ abstract class DatabaseResource {
             .append("firstName", user.firstName)
             .append("lastName", user.lastName)
             .append("isActive", user.isActive)
+    }
+
+    /**
+     * Converts event to MongoDB document
+     *
+     * @param event Event
+     * @return Document
+     */
+    fun eventToDocument(event: Event): Document {
+        return Document()
+            .append("id", event.id)
+            .append("title", event.title)
+            .append("date", event.date)
+            .append("userid", event.userid)
     }
 }
